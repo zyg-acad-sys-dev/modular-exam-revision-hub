@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Modular revision system architecture">
+  <rect width="960" height="540" rx="32" fill="#18181b"/>
+  <text x="60" y="78" fill="#fafafa" font-size="32" font-weight="800">Modular Revision Hub Architecture</text>
+  <g font-size="19" font-weight="700" fill="#fff">
+    <rect x="80" y="160" width="210" height="250" rx="24" fill="#27272a" stroke="#60a5fa" stroke-width="3"/><text x="125" y="210">Course JSON</text><text x="125" y="245" font-size="15">modules</text><text x="125" y="272" font-size="15">concepts</text><text x="125" y="299" font-size="15">quizzes</text><text x="125" y="326" font-size="15">formulas</text>
+    <rect x="375" y="160" width="210" height="250" rx="24" fill="#27272a" stroke="#a78bfa" stroke-width="3"/><text x="420" y="210">Frontend UI</text><text x="420" y="245" font-size="15">cards</text><text x="420" y="272" font-size="15">filters</text><text x="420" y="299" font-size="15">practice</text><text x="420" y="326" font-size="15">exports</text>
+    <rect x="670" y="160" width="210" height="250" rx="24" fill="#27272a" stroke="#34d399" stroke-width="3"/><text x="710" y="210">Learning Log</text><text x="710" y="245" font-size="15">attempts</text><text x="710" y="272" font-size="15">mistakes</text><text x="710" y="299" font-size="15">ratings</text><text x="710" y="326" font-size="15">review due</text>
+  </g>
+  <g stroke="#d4d4d8" stroke-width="6" marker-end="url(#arrow)"><path d="M292 285 L372 285"/><path d="M586 285 L668 285"/></g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#d4d4d8"/></marker></defs>
+</svg>

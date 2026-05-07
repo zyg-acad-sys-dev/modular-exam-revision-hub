@@ -1,0 +1,20 @@
+{
+  "modules": 1,
+  "counts": {
+    "lectures": 4,
+    "concepts": 16,
+    "conceptPatches": 0,
+    "quizzes": 8,
+    "traps": 8,
+    "answers": 4,
+    "formulas": 4,
+    "figures": 4,
+    "trackPatches": 6,
+    "reviewPatches": 6,
+    "tracks": 6,
+    "searchItems": 48
+  },
+  "warningsBeforeMerge": 0,
+  "warningsAfterMerge": 0,
+  "sampleWarnings": []
+}

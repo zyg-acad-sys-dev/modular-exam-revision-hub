@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="RAG ingestion pipeline">
+  <rect width="960" height="540" rx="32" fill="#020617"/>
+  <text x="60" y="78" fill="#e5e7eb" font-size="32" font-weight="800">AI-Ready Content Ingestion Pipeline</text>
+  <g font-size="20" font-weight="700" text-anchor="middle">
+    <rect x="70" y="210" width="150" height="92" rx="20" fill="#0ea5e9" opacity="0.85"/><text x="145" y="262" fill="#fff">Upload</text>
+    <rect x="280" y="210" width="150" height="92" rx="20" fill="#22c55e" opacity="0.85"/><text x="355" y="262" fill="#fff">Chunk</text>
+    <rect x="490" y="210" width="150" height="92" rx="20" fill="#a855f7" opacity="0.85"/><text x="565" y="262" fill="#fff">Retrieve</text>
+    <rect x="700" y="210" width="180" height="92" rx="20" fill="#f97316" opacity="0.88"/><text x="790" y="250" fill="#fff">Generate</text><text x="790" y="278" fill="#fff" font-size="15">cards + quizzes</text>
+  </g>
+  <g stroke="#94a3b8" stroke-width="6" marker-end="url(#arrow)">
+    <path d="M220 256 L278 256"/><path d="M430 256 L488 256"/><path d="M640 256 L698 256"/>
+  </g>
+  <text x="480" y="392" fill="#cbd5e1" font-size="21" text-anchor="middle">Synthetic demo data now · RAG/LLM extension later</text>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#94a3b8"/></marker></defs>
+</svg>

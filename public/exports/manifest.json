@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-05-07T22:10:55.478Z",
+  "modules": 1,
+  "counts": {
+    "lectures": 4,
+    "concepts": 16,
+    "quizzes": 8,
+    "traps": 8,
+    "answers": 4,
+    "formulas": 4,
+    "figures": 4,
+    "searchItems": 48
+  },
+  "files": [
+    "cheat-sheet.md",
+    "long-answers.md",
+    "traps.md",
+    "formulas.md",
+    "quiz-sheet.md"
+  ]
+}

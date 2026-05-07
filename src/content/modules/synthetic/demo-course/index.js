@@ -1,0 +1,638 @@
+import { applyDemoCourseI18n } from "./i18n.js";
+const concept = ({
+  id,
+  title,
+  category,
+  priority = "high",
+  tier = 1,
+  shortDefinition,
+  definition,
+  whyItMatters,
+  keyIdea,
+  likelyQuestions = [],
+  keywords = [],
+  shortAnswer,
+  examSignals = [],
+  relatedLectureIds = [],
+  relatedTrackIds = [],
+  relatedConceptIds = [],
+  trapIds = [],
+  quizIds = [],
+  answerIds = [],
+  formulaIds = [],
+  figureIds = [],
+  sourceIds = ["synthetic-demo-data"],
+  tags = [],
+  memoryCue
+}) => ({
+  id,
+  title,
+  category,
+  priority,
+  tier,
+  shortDefinition,
+  overview: { definition, whyItMatters, keyIdea },
+  exam: { likelyQuestions, keywords, shortAnswer, examSignals },
+  relatedLectureIds,
+  relatedTrackIds,
+  relatedConceptIds,
+  trapIds,
+  quizIds,
+  answerIds,
+  formulaIds,
+  figureIds,
+  sourceIds,
+  tags,
+  visual: { memoryCue }
+});
+
+const lecture = ({
+  id,
+  title,
+  subtitle,
+  color,
+  trackIds,
+  mainQuestion,
+  keywords,
+  buildsOn = [],
+  leadsTo = [],
+  examWeight = "Synthetic demo priority",
+  coreConceptIds,
+  trapIds,
+  quizIds,
+  answerIds,
+  formulaIds,
+  figureIds,
+  visualMap
+}) => ({
+  id,
+  title,
+  subtitle,
+  color,
+  trackIds,
+  mainQuestion,
+  keywords,
+  buildsOn,
+  leadsTo,
+  examWeight,
+  visualMap,
+  coreConceptIds,
+  examSignals: keywords.slice(0, 6).map((keyword) => `Use ${keyword} as a review signal.`),
+  trapIds,
+  quizIds,
+  answerIds,
+  formulaIds,
+  figureIds,
+  sourceIds: ["synthetic-demo-data"]
+});
+
+const quiz = ({ id, question, options, correctAnswers, explanation, relatedLectureIds, relatedConceptIds, category, priority = "high", type = "single" }) => ({
+  id,
+  question,
+  options,
+  correctAnswers,
+  explanation,
+  relatedLectureIds,
+  relatedConceptIds,
+  category,
+  priority,
+  type,
+  tags: ["synthetic", "active-recall"]
+});
+
+const trap = ({ id, wrong, correct, why, relatedLectureIds, relatedConceptIds, category, priority = "high" }) => ({
+  id,
+  wrong,
+  correct,
+  why,
+  relatedLectureIds,
+  relatedConceptIds,
+  category,
+  priority,
+  tags: ["synthetic", "common-mistake"]
+});
+
+const answer = ({ id, question, keywords, skeleton, fullAnswer, commonMistakes, relatedLectureIds, relatedConceptIds, category, priority = "high" }) => ({
+  id,
+  question,
+  keywords,
+  skeleton,
+  fullAnswer,
+  commonMistakes,
+  relatedLectureIds,
+  relatedConceptIds,
+  category,
+  priority,
+  tags: ["synthetic", "long-answer"]
+});
+
+const formula = ({ id, title, latex, variables, example, examNote, relatedLectureIds, relatedConceptIds, category }) => ({
+  id,
+  title,
+  latex,
+  variables,
+  example,
+  examNote,
+  relatedLectureIds,
+  relatedConceptIds,
+  category,
+  tags: ["synthetic", "formula"]
+});
+
+const figure = ({ id, title, type, imagePath, alt, keyVisualCue, recognitionQuestion, relatedLectureIds, relatedConceptIds, category, tags = [] }) => ({
+  id,
+  title,
+  type,
+  imagePath,
+  alt,
+  keyVisualCue,
+  recognitionQuestion,
+  relatedLectureIds,
+  relatedConceptIds,
+  category,
+  tags: ["synthetic", ...tags]
+});
+
+const demoCourse = {
+  id: "synthetic-modular-exam-revision-demo",
+  type: "course",
+  title: "Synthetic Demo Course — Modular Exam Revision",
+  version: "0.1.0-rough",
+  enabled: true,
+
+  meta: {
+    sourcePriority: "synthetic",
+    status: "rough prototype",
+    lastUpdated: "2026-05-08",
+    notes: "All content in this module is synthetic sample data for demonstrating a modular, AI-ready exam revision system. It does not include real course materials."
+  },
+
+  lectures: [
+    lecture({
+      id: "w01",
+      title: "Module 01 — Learning Science Foundations",
+      subtitle: "Spaced repetition, active recall, cognitive load, and metacognitive review.",
+      color: "blue",
+      trackIds: ["learning-science", "personalized-review"],
+      mainQuestion: "How can a revision system turn passive notes into active, scheduled learning tasks?",
+      keywords: ["spaced repetition", "active recall", "cognitive load", "metacognition", "review schedule"],
+      leadsTo: ["w02"],
+      coreConceptIds: ["spaced-repetition", "active-recall", "cognitive-load", "metacognitive-review"],
+      trapIds: ["trap-passive-reading", "trap-overloaded-dashboard"],
+      quizIds: ["q-spaced-repetition", "q-active-recall"],
+      answerIds: ["ans-learning-science-design"],
+      formulaIds: ["formula-forgetting-curve"],
+      figureIds: ["fig-review-cycle"],
+      visualMap: {
+        type: "flow",
+        title: "Encode → Recall → Diagnose → Schedule",
+        nodes: ["spaced-repetition", "active-recall", "metacognitive-review", "cognitive-load"],
+        edges: [["spaced-repetition", "active-recall"], ["active-recall", "metacognitive-review"], ["metacognitive-review", "spaced-repetition"]],
+        note: "The module connects learning-science principles to concrete revision interactions."
+      }
+    }),
+    lecture({
+      id: "w02",
+      title: "Module 02 — Cognitive Diagnosis and Learning Records",
+      subtitle: "Knowledge components, mastery estimates, confidence, and mistake patterns.",
+      color: "purple",
+      trackIds: ["cognitive-diagnosis", "personalized-review"],
+      mainQuestion: "How can quiz attempts and mistakes become signals for diagnosing weak areas?",
+      keywords: ["knowledge component", "mastery estimate", "mistake pattern", "confidence calibration", "learning log"],
+      buildsOn: ["w01"],
+      leadsTo: ["w03"],
+      coreConceptIds: ["knowledge-component", "mastery-estimate", "mistake-pattern", "confidence-calibration"],
+      trapIds: ["trap-score-equals-mastery", "trap-confidence-is-accuracy"],
+      quizIds: ["q-knowledge-component", "q-confidence-calibration"],
+      answerIds: ["ans-cognitive-diagnosis"],
+      formulaIds: ["formula-mastery-update"],
+      figureIds: ["fig-diagnosis-loop"],
+      visualMap: {
+        type: "flow",
+        title: "Attempt → Evidence → Diagnosis → Review Path",
+        nodes: ["knowledge-component", "mastery-estimate", "mistake-pattern", "confidence-calibration"],
+        edges: [["knowledge-component", "mastery-estimate"], ["mistake-pattern", "mastery-estimate"], ["confidence-calibration", "metacognitive-review"]],
+        note: "A learning record is useful only when it is tied to specific knowledge components."
+      }
+    }),
+    lecture({
+      id: "w03",
+      title: "Module 03 — AI-Ready Content Ingestion",
+      subtitle: "A future RAG/LLM workflow for transforming user-provided materials into review units.",
+      color: "green",
+      trackIds: ["ai-workflow", "research-extension"],
+      mainQuestion: "How can uploaded materials become structured concepts, quizzes, traps, and explanations?",
+      keywords: ["content ingestion", "RAG", "chunking", "retrieval", "generated quiz", "source grounding"],
+      buildsOn: ["w01", "w02"],
+      leadsTo: ["w04"],
+      coreConceptIds: ["content-ingestion", "rag-assistant", "quiz-generation", "grounding-guardrail"],
+      trapIds: ["trap-train-llm-wording", "trap-ungrounded-generation"],
+      quizIds: ["q-rag-vs-finetuning", "q-grounding"],
+      answerIds: ["ans-ai-extension-roadmap"],
+      formulaIds: ["formula-cosine-similarity"],
+      figureIds: ["fig-rag-pipeline"],
+      visualMap: {
+        type: "flow",
+        title: "Upload → Chunk → Retrieve → Generate → Verify",
+        nodes: ["content-ingestion", "rag-assistant", "quiz-generation", "grounding-guardrail"],
+        edges: [["content-ingestion", "rag-assistant"], ["rag-assistant", "quiz-generation"], ["quiz-generation", "grounding-guardrail"]],
+        note: "The rough demo uses synthetic data now; the architecture leaves room for later LLM/RAG integration."
+      }
+    }),
+    lecture({
+      id: "w04",
+      title: "Module 04 — Prototype System and Evaluation",
+      subtitle: "Modular schema, local learning logs, dashboard design, and deployment workflow.",
+      color: "gold",
+      trackIds: ["prototype-engineering", "research-extension"],
+      mainQuestion: "How can the prototype be evaluated as both a web system and a research platform?",
+      keywords: ["modular schema", "frontend prototype", "local progress", "priority dashboard", "deployment"],
+      buildsOn: ["w01", "w02", "w03"],
+      coreConceptIds: ["modular-schema", "local-learning-log", "priority-dashboard", "deployment-workflow"],
+      trapIds: ["trap-feature-list-without-data", "trap-demo-overclaim"],
+      quizIds: ["q-modular-schema", "q-prototype-scope"],
+      answerIds: ["ans-prototype-evaluation"],
+      formulaIds: ["formula-priority-score"],
+      figureIds: ["fig-modular-architecture"],
+      visualMap: {
+        type: "flow",
+        title: "Course Pack → UI Cards → Learning Log → Review Recommendation",
+        nodes: ["modular-schema", "local-learning-log", "priority-dashboard", "deployment-workflow"],
+        edges: [["modular-schema", "local-learning-log"], ["local-learning-log", "priority-dashboard"], ["priority-dashboard", "deployment-workflow"]],
+        note: "A modular data structure makes the demo easier to adapt to multiple courses."
+      }
+    })
+  ],
+
+  concepts: [
+    concept({
+      id: "spaced-repetition",
+      title: "Spaced Repetition",
+      category: "learning-science",
+      shortDefinition: "A review strategy that schedules repeated practice after increasing intervals.",
+      definition: "Spaced repetition presents a learning item again after a delay, so that recall is practiced before the memory becomes too weak.",
+      whyItMatters: "It gives the system a clear reason to maintain due dates and review queues instead of showing all material equally.",
+      keyIdea: "Review timing is part of the learning interface, not a separate reminder feature.",
+      likelyQuestions: ["Why is spaced repetition useful in an exam revision system?"],
+      keywords: ["review interval", "forgetting curve", "due queue"],
+      shortAnswer: "Spaced repetition prioritizes items that should be recalled again after a suitable delay.",
+      examSignals: ["Look for repeated review, intervals, and due items."],
+      relatedLectureIds: ["w01"], relatedTrackIds: ["learning-science", "personalized-review"],
+      relatedConceptIds: ["active-recall", "metacognitive-review"],
+      trapIds: ["trap-passive-reading"], quizIds: ["q-spaced-repetition"], answerIds: ["ans-learning-science-design"],
+      formulaIds: ["formula-forgetting-curve"], figureIds: ["fig-review-cycle"],
+      tags: ["learning-science", "review", "scheduling"], memoryCue: "Do not just reread; come back at the right time."
+    }),
+    concept({
+      id: "active-recall",
+      title: "Active Recall",
+      category: "learning-science",
+      shortDefinition: "A practice method where the learner retrieves an answer before seeing it.",
+      definition: "Active recall turns study into a retrieval task, such as answering a quiz, explaining a concept, or reconstructing a formula.",
+      whyItMatters: "The prototype uses quiz cards, formula practice, and long-answer prompts because retrieval is more diagnostic than passive reading.",
+      keyIdea: "The system asks before it explains.",
+      likelyQuestions: ["How do quizzes and long-answer prompts support active recall?"],
+      keywords: ["retrieval practice", "quiz", "prompt"],
+      shortAnswer: "Active recall requires the learner to retrieve information before checking the explanation.",
+      examSignals: ["Look for try-first design and reveal-later feedback."],
+      relatedLectureIds: ["w01"], relatedTrackIds: ["learning-science"],
+      relatedConceptIds: ["spaced-repetition", "metacognitive-review"], trapIds: ["trap-passive-reading"], quizIds: ["q-active-recall"], answerIds: ["ans-learning-science-design"],
+      figureIds: ["fig-review-cycle"], tags: ["learning-science", "quiz"], memoryCue: "Question first, explanation second."
+    }),
+    concept({
+      id: "cognitive-load",
+      title: "Cognitive Load Reduction",
+      category: "learning-science",
+      priority: "medium",
+      tier: 2,
+      shortDefinition: "A design principle that reduces unnecessary mental effort during review.",
+      definition: "Cognitive load reduction means the interface should make the next action obvious and avoid displaying too many unrelated details at once.",
+      whyItMatters: "A revision dashboard can become confusing if every feature competes for attention.",
+      keyIdea: "Cards, tabs, filters, and concise labels keep attention on one review decision at a time.",
+      likelyQuestions: ["How can UI design reduce cognitive load?"],
+      keywords: ["interface", "attention", "low load"],
+      shortAnswer: "The system lowers cognitive load through modular cards, grouped pages, and focused review flows.",
+      examSignals: ["Avoid dashboards that are dense but not actionable."],
+      relatedLectureIds: ["w01"], relatedTrackIds: ["learning-science", "prototype-engineering"],
+      relatedConceptIds: ["active-recall", "priority-dashboard"], trapIds: ["trap-overloaded-dashboard"], answerIds: ["ans-learning-science-design"],
+      tags: ["ui", "learning-science"], memoryCue: "Less noise, clearer next action."
+    }),
+    concept({
+      id: "metacognitive-review",
+      title: "Metacognitive Review",
+      category: "learning-science",
+      shortDefinition: "Review that helps learners monitor what they know, do not know, and repeatedly miss.",
+      definition: "Metacognitive review uses mistake records, confidence checks, and reflection prompts to make weak areas visible.",
+      whyItMatters: "The mistake book and priority dashboard become more meaningful when they help the learner decide what to review next.",
+      keyIdea: "A good system records not only answers, but also uncertainty and repeated patterns.",
+      likelyQuestions: ["Why is a mistake book useful beyond storing wrong answers?"],
+      keywords: ["reflection", "mistake book", "weak area"],
+      shortAnswer: "Metacognitive review helps learners see their own weak areas and adjust their study plan.",
+      examSignals: ["Look for mistake patterns and confidence mismatch."],
+      relatedLectureIds: ["w01"], relatedTrackIds: ["learning-science", "cognitive-diagnosis"],
+      relatedConceptIds: ["mistake-pattern", "confidence-calibration"], trapIds: ["trap-confidence-is-accuracy"], answerIds: ["ans-cognitive-diagnosis"],
+      figureIds: ["fig-review-cycle", "fig-diagnosis-loop"], tags: ["metacognition", "diagnosis"], memoryCue: "Know what you know; notice what you miss."
+    }),
+    concept({
+      id: "knowledge-component",
+      title: "Knowledge Component",
+      category: "cognitive-diagnosis",
+      shortDefinition: "A small skill or concept that a learner is expected to master.",
+      definition: "A knowledge component is a unit of learning such as a formula, concept, procedure, or recognition skill.",
+      whyItMatters: "Diagnosis is more useful when each quiz or mistake can be linked to one or more knowledge components.",
+      keyIdea: "Do not only record a wrong answer; record which skill it points to.",
+      likelyQuestions: ["Why are knowledge components useful for personalized revision?"],
+      keywords: ["skill", "concept", "mapping"],
+      shortAnswer: "Knowledge components connect learning activities to specific weak areas.",
+      examSignals: ["Look for mapping between item and concept."],
+      relatedLectureIds: ["w02"], relatedTrackIds: ["cognitive-diagnosis"],
+      relatedConceptIds: ["mastery-estimate", "mistake-pattern"], trapIds: ["trap-score-equals-mastery"], quizIds: ["q-knowledge-component"], answerIds: ["ans-cognitive-diagnosis"],
+      formulaIds: ["formula-mastery-update"], figureIds: ["fig-diagnosis-loop"], tags: ["diagnosis", "knowledge-tracing"], memoryCue: "Every question should point to a skill."
+    }),
+    concept({
+      id: "mastery-estimate",
+      title: "Mastery Estimate",
+      category: "cognitive-diagnosis",
+      shortDefinition: "A tentative estimate of how well a learner understands a knowledge component.",
+      definition: "A mastery estimate can be updated from quiz correctness, review ratings, time gaps, and repeated mistakes.",
+      whyItMatters: "It provides a bridge from raw interactions to personalized recommendations.",
+      keyIdea: "Mastery is probabilistic and should not be treated as one test score.",
+      likelyQuestions: ["Why is mastery not the same as the latest quiz score?"],
+      keywords: ["probability", "update", "learning record"],
+      shortAnswer: "A mastery estimate summarizes evidence about a learner's likely understanding of a concept.",
+      examSignals: ["Use multiple signals rather than one answer."],
+      relatedLectureIds: ["w02"], relatedTrackIds: ["cognitive-diagnosis", "personalized-review"],
+      relatedConceptIds: ["knowledge-component", "confidence-calibration"], trapIds: ["trap-score-equals-mastery"], answerIds: ["ans-cognitive-diagnosis"],
+      formulaIds: ["formula-mastery-update"], figureIds: ["fig-diagnosis-loop"], tags: ["diagnosis", "personalization"], memoryCue: "Mastery is an estimate, not a label."
+    }),
+    concept({
+      id: "mistake-pattern",
+      title: "Mistake Pattern",
+      category: "cognitive-diagnosis",
+      shortDefinition: "A repeated type of error that reveals a specific misunderstanding.",
+      definition: "A mistake pattern is more informative than a single wrong answer because it suggests a stable confusion or missing skill.",
+      whyItMatters: "The mistake book can group repeated traps and guide targeted review.",
+      keyIdea: "Patterns turn wrong answers into review decisions.",
+      likelyQuestions: ["What should a mistake book record?"],
+      keywords: ["wrong answer", "trap", "pattern"],
+      shortAnswer: "A mistake pattern is a repeated error linked to a specific concept or skill.",
+      examSignals: ["Repeated wrong answers should increase review priority."],
+      relatedLectureIds: ["w02"], relatedTrackIds: ["cognitive-diagnosis"],
+      relatedConceptIds: ["knowledge-component", "metacognitive-review"], trapIds: ["trap-score-equals-mastery"], answerIds: ["ans-cognitive-diagnosis"],
+      figureIds: ["fig-diagnosis-loop"], tags: ["mistakes", "diagnosis"], memoryCue: "One mistake is data; repeated mistakes are signals."
+    }),
+    concept({
+      id: "confidence-calibration",
+      title: "Confidence Calibration",
+      category: "cognitive-diagnosis",
+      priority: "medium",
+      tier: 2,
+      shortDefinition: "The alignment between how confident a learner feels and how correct they are.",
+      definition: "Confidence calibration compares self-reported certainty with actual quiz performance or explanation quality.",
+      whyItMatters: "Overconfidence can hide weak areas, while underconfidence can waste review time on already-mastered content.",
+      keyIdea: "A future system can ask for confidence before revealing answers.",
+      likelyQuestions: ["Why may confidence be added to learning logs?"],
+      keywords: ["confidence", "calibration", "self-assessment"],
+      shortAnswer: "Calibration shows whether the learner's confidence matches actual performance.",
+      examSignals: ["Wrong but confident should trigger high-priority review."],
+      relatedLectureIds: ["w02"], relatedTrackIds: ["cognitive-diagnosis", "research-extension"],
+      relatedConceptIds: ["metacognitive-review", "mastery-estimate"], trapIds: ["trap-confidence-is-accuracy"], quizIds: ["q-confidence-calibration"], answerIds: ["ans-cognitive-diagnosis"],
+      tags: ["confidence", "metacognition"], memoryCue: "Confidence is useful only when checked against evidence."
+    }),
+    concept({
+      id: "content-ingestion",
+      title: "Course Content Ingestion",
+      category: "ai-workflow",
+      shortDefinition: "The process of turning user-provided materials into structured review items.",
+      definition: "Content ingestion may include parsing notes, splitting text into chunks, extracting concepts, and creating review cards.",
+      whyItMatters: "It is the future bridge between a static prototype and a genuinely interactive revision assistant.",
+      keyIdea: "Upload is not enough; the system needs structure, traceability, and verification.",
+      likelyQuestions: ["What is the first step of an AI-ready revision assistant?"],
+      keywords: ["upload", "parsing", "chunking", "structure"],
+      shortAnswer: "Content ingestion converts raw course materials into structured review objects.",
+      examSignals: ["Mention synthetic demo now and user-provided material later."],
+      relatedLectureIds: ["w03"], relatedTrackIds: ["ai-workflow"],
+      relatedConceptIds: ["rag-assistant", "grounding-guardrail"], trapIds: ["trap-train-llm-wording"], quizIds: ["q-rag-vs-finetuning"], answerIds: ["ans-ai-extension-roadmap"],
+      figureIds: ["fig-rag-pipeline"], tags: ["llm", "rag", "future-work"], memoryCue: "Raw notes become structured learning objects."
+    }),
+    concept({
+      id: "rag-assistant",
+      title: "RAG-Based Revision Assistant",
+      category: "ai-workflow",
+      shortDefinition: "An assistant that answers and generates study items using retrieved course-grounded context.",
+      definition: "Retrieval-augmented generation retrieves relevant source chunks before generating explanations, quizzes, or summaries.",
+      whyItMatters: "It avoids overclaiming that the project needs to train a new model from scratch.",
+      keyIdea: "Use retrieval and grounding before generation.",
+      likelyQuestions: ["Why is RAG a safer wording than training a new LLM?"],
+      keywords: ["retrieval", "generation", "grounding", "source"],
+      shortAnswer: "A RAG assistant generates revision support with reference to retrieved course content.",
+      examSignals: ["Distinguish RAG from fine-tuning."],
+      relatedLectureIds: ["w03"], relatedTrackIds: ["ai-workflow", "research-extension"],
+      relatedConceptIds: ["content-ingestion", "grounding-guardrail"], trapIds: ["trap-train-llm-wording", "trap-ungrounded-generation"], quizIds: ["q-rag-vs-finetuning", "q-grounding"], answerIds: ["ans-ai-extension-roadmap"],
+      formulaIds: ["formula-cosine-similarity"], figureIds: ["fig-rag-pipeline"], tags: ["rag", "llm"], memoryCue: "Retrieve first; generate second."
+    }),
+    concept({
+      id: "quiz-generation",
+      title: "AI-Assisted Quiz Generation",
+      category: "ai-workflow",
+      priority: "medium",
+      tier: 2,
+      shortDefinition: "Using an AI workflow to draft quiz questions from structured learning materials.",
+      definition: "Quiz generation can propose multiple-choice, true/false, and short-answer prompts, but the output should be checked for ambiguity and source alignment.",
+      whyItMatters: "It shows how the prototype can become genuinely interactive after course materials are ingested.",
+      keyIdea: "Generated quizzes should be stored as editable structured data, not only chat output.",
+      likelyQuestions: ["What makes generated quizzes usable in a system?"],
+      keywords: ["quiz", "generation", "structured output"],
+      shortAnswer: "Generated quizzes are useful when they are grounded, editable, and linked to concepts.",
+      examSignals: ["Mention validation and concept linkage."],
+      relatedLectureIds: ["w03"], relatedTrackIds: ["ai-workflow"],
+      relatedConceptIds: ["content-ingestion", "knowledge-component"], trapIds: ["trap-ungrounded-generation"], answerIds: ["ans-ai-extension-roadmap"],
+      figureIds: ["fig-rag-pipeline"], tags: ["quiz", "generation"], memoryCue: "AI drafts; the system structures and checks."
+    }),
+    concept({
+      id: "grounding-guardrail",
+      title: "Grounding Guardrail",
+      category: "ai-workflow",
+      shortDefinition: "A safeguard that keeps generated review content tied to source material.",
+      definition: "A grounding guardrail can require source chunks, confidence checks, or human review before generated content is added to a course pack.",
+      whyItMatters: "It is important because educational tools should not invent facts or misrepresent course requirements.",
+      keyIdea: "No source, no high-confidence study item.",
+      likelyQuestions: ["Why does an AI study system need source grounding?"],
+      keywords: ["source", "verification", "hallucination"],
+      shortAnswer: "Grounding guardrails reduce unsupported or misleading generated review items.",
+      examSignals: ["Stress source traceability."],
+      relatedLectureIds: ["w03"], relatedTrackIds: ["ai-workflow", "research-extension"],
+      relatedConceptIds: ["rag-assistant", "quiz-generation"], trapIds: ["trap-ungrounded-generation"], quizIds: ["q-grounding"], answerIds: ["ans-ai-extension-roadmap"],
+      figureIds: ["fig-rag-pipeline"], tags: ["safety", "verification"], memoryCue: "Generated content should point back to evidence."
+    }),
+    concept({
+      id: "modular-schema",
+      title: "Modular Course Schema",
+      category: "prototype-engineering",
+      shortDefinition: "A reusable data structure for lectures/modules, concepts, quizzes, traps, formulas, figures, and answers.",
+      definition: "A modular schema makes each course a replaceable content pack rather than hard-coded website text.",
+      whyItMatters: "It directly supports the idea that different courses can be loaded into the same revision system.",
+      keyIdea: "The app should read course data, not be one fixed course page.",
+      likelyQuestions: ["Why is modular data design important for this prototype?"],
+      keywords: ["JSON", "schema", "content pack", "course agnostic"],
+      shortAnswer: "A modular schema lets the same interface support multiple courses.",
+      examSignals: ["Mention replaceable course packs."],
+      relatedLectureIds: ["w04"], relatedTrackIds: ["prototype-engineering"],
+      relatedConceptIds: ["content-ingestion", "local-learning-log"], trapIds: ["trap-feature-list-without-data"], quizIds: ["q-modular-schema"], answerIds: ["ans-prototype-evaluation"],
+      figureIds: ["fig-modular-architecture"], tags: ["data-model", "frontend"], memoryCue: "Make the course data swappable."
+    }),
+    concept({
+      id: "local-learning-log",
+      title: "Local Learning Log",
+      category: "prototype-engineering",
+      priority: "medium",
+      tier: 2,
+      shortDefinition: "A browser-side record of quiz attempts, review ratings, bookmarks, and due items.",
+      definition: "The rough prototype stores user progress locally to demonstrate the review logic without requiring a backend.",
+      whyItMatters: "It allows a functional demo while leaving backend synchronization as a future extension.",
+      keyIdea: "A minimal log is enough to power mistakes and spaced review in a prototype.",
+      likelyQuestions: ["Why can local storage be acceptable for an MVP?"],
+      keywords: ["localStorage", "attempt", "bookmark", "due item"],
+      shortAnswer: "A local learning log supports an MVP review loop before backend integration.",
+      examSignals: ["Separate MVP storage from production storage."],
+      relatedLectureIds: ["w04"], relatedTrackIds: ["prototype-engineering", "personalized-review"],
+      relatedConceptIds: ["priority-dashboard", "mastery-estimate"], trapIds: ["trap-demo-overclaim"], answerIds: ["ans-prototype-evaluation"],
+      figureIds: ["fig-modular-architecture"], tags: ["mvp", "learning-log"], memoryCue: "Prototype locally, scale later."
+    }),
+    concept({
+      id: "priority-dashboard",
+      title: "Priority Dashboard",
+      category: "prototype-engineering",
+      shortDefinition: "A dashboard that ranks review items by priority, mistakes, and learning signals.",
+      definition: "The priority dashboard helps the learner decide what to review next instead of browsing all modules equally.",
+      whyItMatters: "It connects learning science to interface design and future ML-based recommendation.",
+      keyIdea: "The dashboard should make the next review action obvious.",
+      likelyQuestions: ["What signals can a priority dashboard use?"],
+      keywords: ["priority", "dashboard", "recommendation"],
+      shortAnswer: "A priority dashboard surfaces high-value concepts, traps, and quizzes for review.",
+      examSignals: ["Mention static priority now, adaptive priority later."],
+      relatedLectureIds: ["w04"], relatedTrackIds: ["prototype-engineering", "personalized-review"],
+      relatedConceptIds: ["local-learning-log", "mastery-estimate"], trapIds: ["trap-feature-list-without-data"], quizIds: ["q-prototype-scope"], answerIds: ["ans-prototype-evaluation"],
+      formulaIds: ["formula-priority-score"], figureIds: ["fig-modular-architecture"], tags: ["dashboard", "recommendation"], memoryCue: "Turn many items into one next action."
+    }),
+    concept({
+      id: "deployment-workflow",
+      title: "Deployment Workflow",
+      category: "prototype-engineering",
+      priority: "medium",
+      tier: 2,
+      shortDefinition: "A simple path from local prototype to shareable web demo.",
+      definition: "The prototype can be deployed through GitHub Pages, Vercel, or another static hosting workflow after validation.",
+      whyItMatters: "A shareable build makes the prototype easier to review, test, and improve.",
+      keyIdea: "A project is easier to review when it has a live demo and a clean repository.",
+      likelyQuestions: ["Why is deployment part of a prototype workflow?"],
+      keywords: ["GitHub", "Vercel", "CI/CD", "demo"],
+      shortAnswer: "Deployment turns a local build into a shareable prototype that others can test.",
+      examSignals: ["Connect implementation to demonstration."],
+      relatedLectureIds: ["w04"], relatedTrackIds: ["prototype-engineering"],
+      relatedConceptIds: ["modular-schema", "priority-dashboard"], trapIds: ["trap-demo-overclaim"], answerIds: ["ans-prototype-evaluation"],
+      figureIds: ["fig-modular-architecture"], tags: ["deployment", "github"], memoryCue: "A live demo communicates faster than a description."
+    })
+  ],
+
+  quizzes: [
+    quiz({ id: "q-spaced-repetition", question: "Which feature most directly supports spaced repetition?", options: ["A static PDF export", "A due review queue", "A random color theme", "A long landing page"], correctAnswers: ["A due review queue"], explanation: "A due review queue schedules items for repeated recall after intervals.", relatedLectureIds: ["w01"], relatedConceptIds: ["spaced-repetition"], category: "learning-science" }),
+    quiz({ id: "q-active-recall", question: "Active recall is best represented by which interaction?", options: ["Reveal the answer first", "Read all notes twice", "Try a quiz before seeing the explanation", "Only browse the table of contents"], correctAnswers: ["Try a quiz before seeing the explanation"], explanation: "Active recall requires retrieval before feedback.", relatedLectureIds: ["w01"], relatedConceptIds: ["active-recall"], category: "learning-science" }),
+    quiz({ id: "q-knowledge-component", question: "Why should a quiz item be linked to a knowledge component?", options: ["To make the UI colorful", "To identify the weak skill behind a response", "To remove the need for explanations", "To avoid tracking attempts"], correctAnswers: ["To identify the weak skill behind a response"], explanation: "Concept linkage makes diagnosis and review targeting possible.", relatedLectureIds: ["w02"], relatedConceptIds: ["knowledge-component"], category: "cognitive-diagnosis" }),
+    quiz({ id: "q-confidence-calibration", question: "A learner is wrong but highly confident. What should the system infer?", options: ["Ignore the result", "Mark the item as mastered", "Treat it as a high-value review signal", "Delete the question"], correctAnswers: ["Treat it as a high-value review signal"], explanation: "High-confidence errors often reveal hidden misconceptions.", relatedLectureIds: ["w02"], relatedConceptIds: ["confidence-calibration"], category: "cognitive-diagnosis" }),
+    quiz({ id: "q-rag-vs-finetuning", question: "For a lightweight course assistant prototype, why is RAG usually safer to describe than training a new LLM?", options: ["RAG requires no course materials", "RAG can use retrieved source context without claiming model training", "RAG removes all errors automatically", "RAG is only a frontend feature"], correctAnswers: ["RAG can use retrieved source context without claiming model training"], explanation: "RAG supports source-grounded generation without overstating model training.", relatedLectureIds: ["w03"], relatedConceptIds: ["rag-assistant", "content-ingestion"], category: "ai-workflow" }),
+    quiz({ id: "q-grounding", question: "Which rule best describes a grounding guardrail?", options: ["No source, no high-confidence item", "Always trust generated text", "Disable human review", "Store only raw chat output"], correctAnswers: ["No source, no high-confidence item"], explanation: "Grounding keeps generated study content tied to evidence.", relatedLectureIds: ["w03"], relatedConceptIds: ["grounding-guardrail"], category: "ai-workflow" }),
+    quiz({ id: "q-modular-schema", question: "What is the main benefit of a modular course schema?", options: ["It makes every course hard-coded", "It lets the same interface load different course packs", "It removes the need for data validation", "It prevents deployment"], correctAnswers: ["It lets the same interface load different course packs"], explanation: "The system becomes course-agnostic when content is stored as replaceable structured data.", relatedLectureIds: ["w04"], relatedConceptIds: ["modular-schema"], category: "prototype-engineering" }),
+    quiz({ id: "q-prototype-scope", question: "Which statement is the safest for the current rough demo?", options: ["It fully trains a new AI tutor", "It uses synthetic data and is AI-ready for future ingestion", "It contains real course materials", "It guarantees exam performance"], correctAnswers: ["It uses synthetic data and is AI-ready for future ingestion"], explanation: "The demo should describe the current implementation clearly while showing the extension path.", relatedLectureIds: ["w04"], relatedConceptIds: ["priority-dashboard", "deployment-workflow"], category: "prototype-engineering" })
+  ],
+
+  traps: [
+    trap({ id: "trap-passive-reading", wrong: "A revision system only needs to display notes clearly.", correct: "A strong revision system should create retrieval, feedback, and scheduled review actions.", why: "Clear notes help, but interactive recall produces more useful learning signals.", relatedLectureIds: ["w01"], relatedConceptIds: ["spaced-repetition", "active-recall"], category: "learning-science" }),
+    trap({ id: "trap-overloaded-dashboard", wrong: "More panels always mean a smarter learning dashboard.", correct: "A useful dashboard should reduce cognitive load and clarify the next review action.", why: "Too many simultaneous signals can make the system harder to use.", relatedLectureIds: ["w01"], relatedConceptIds: ["cognitive-load"], category: "learning-science", priority: "medium" }),
+    trap({ id: "trap-score-equals-mastery", wrong: "The latest quiz score is the same thing as mastery.", correct: "Mastery should be estimated from multiple signals such as repeated attempts, concept mapping, time gaps, and mistakes.", why: "A single answer can be lucky, stale, or affected by wording.", relatedLectureIds: ["w02"], relatedConceptIds: ["mastery-estimate", "knowledge-component", "mistake-pattern"], category: "cognitive-diagnosis" }),
+    trap({ id: "trap-confidence-is-accuracy", wrong: "If a learner feels confident, the concept is mastered.", correct: "Confidence should be calibrated against actual performance.", why: "High-confidence mistakes are especially important diagnostic signals.", relatedLectureIds: ["w02"], relatedConceptIds: ["confidence-calibration", "metacognitive-review"], category: "cognitive-diagnosis" }),
+    trap({ id: "trap-train-llm-wording", wrong: "The next step is to train a large language model on every course.", correct: "A safer next step is LLM/RAG-based content ingestion using user-provided materials.", why: "Training or fine-tuning claims can sound unrealistic and raise privacy/copyright concerns.", relatedLectureIds: ["w03"], relatedConceptIds: ["content-ingestion", "rag-assistant"], category: "ai-workflow" }),
+    trap({ id: "trap-ungrounded-generation", wrong: "Generated quizzes can be trusted as long as they sound fluent.", correct: "Generated quizzes should be grounded in source material and checked for ambiguity.", why: "Fluent output can still be wrong, unsupported, or misaligned with the course.", relatedLectureIds: ["w03"], relatedConceptIds: ["quiz-generation", "grounding-guardrail"], category: "ai-workflow" }),
+    trap({ id: "trap-feature-list-without-data", wrong: "A prototype is strong if it has many feature names.", correct: "A prototype is stronger when features are connected to a clear data model and user flow.", why: "The data structure is what makes the system extensible to other courses.", relatedLectureIds: ["w04"], relatedConceptIds: ["modular-schema", "priority-dashboard"], category: "prototype-engineering" }),
+    trap({ id: "trap-demo-overclaim", wrong: "The demo should claim to be a complete adaptive AI tutor.", correct: "The demo should state that it is a rough, synthetic-data, AI-ready prototype.", why: "Clear product boundaries make the prototype easier to evaluate and improve.", relatedLectureIds: ["w04"], relatedConceptIds: ["deployment-workflow", "local-learning-log"], category: "prototype-engineering" })
+  ],
+
+  answers: [
+    answer({
+      id: "ans-learning-science-design",
+      question: "Explain how learning-science principles shape the revision system design.",
+      keywords: ["spaced repetition", "active recall", "cognitive load", "metacognition", "mistake book"],
+      skeleton: ["Start from the problem of passive revision.", "Explain spaced repetition as scheduled review.", "Explain active recall as try-first practice.", "Explain cognitive load reduction through modular cards.", "Connect mistake records to metacognitive review."],
+      fullAnswer: "The system is designed to move students from passive reading to active, scheduled review. Spaced repetition motivates a due review queue, active recall motivates quizzes and long-answer prompts, cognitive load reduction motivates modular cards and focused pages, and metacognitive review motivates mistake tracking and weak-area reflection.",
+      commonMistakes: ["Only listing features without linking them to learning principles.", "Treating spaced repetition as a simple reminder rather than a review strategy."],
+      relatedLectureIds: ["w01"], relatedConceptIds: ["spaced-repetition", "active-recall", "cognitive-load", "metacognitive-review"], category: "learning-science"
+    }),
+    answer({
+      id: "ans-cognitive-diagnosis",
+      question: "Describe how user learning records can support cognitive diagnosis.",
+      keywords: ["knowledge component", "mastery estimate", "mistake pattern", "confidence", "learning log"],
+      skeleton: ["Define knowledge components.", "Map quiz items and mistakes to concepts.", "Use repeated attempts as evidence.", "Add confidence calibration as a future signal.", "Use the result to recommend review priorities."],
+      fullAnswer: "Learning records become useful when raw attempts are connected to knowledge components. Correctness, repeated errors, review ratings, and confidence can be combined into tentative mastery estimates. These estimates should not be treated as fixed labels, but as evidence for ranking weak areas and choosing what to review next.",
+      commonMistakes: ["Equating one quiz score with mastery.", "Ignoring which concept a wrong answer belongs to."],
+      relatedLectureIds: ["w02"], relatedConceptIds: ["knowledge-component", "mastery-estimate", "mistake-pattern", "confidence-calibration"], category: "cognitive-diagnosis"
+    }),
+    answer({
+      id: "ans-ai-extension-roadmap",
+      question: "Outline a future AI/RAG extension for the revision hub.",
+      keywords: ["upload", "chunking", "retrieval", "generation", "grounding", "human review"],
+      skeleton: ["Start with user-provided materials.", "Parse and chunk materials into retrievable units.", "Use retrieval to ground generated outputs.", "Generate concepts, quizzes, traps, and summaries as structured objects.", "Apply guardrails before adding items to a course pack."],
+      fullAnswer: "A future AI extension can allow users to upload course notes or slides, extract structured chunks, retrieve relevant context, and generate review objects such as concept cards and quizzes. The safest design is RAG-based rather than claiming to train a new model. Generated content should include source grounding, editable structured output, and optional human review.",
+      commonMistakes: ["Saying the system trains an LLM without explaining data, cost, or privacy.", "Generating quiz text without linking it to source material."],
+      relatedLectureIds: ["w03"], relatedConceptIds: ["content-ingestion", "rag-assistant", "quiz-generation", "grounding-guardrail"], category: "ai-workflow"
+    }),
+    answer({
+      id: "ans-prototype-evaluation",
+      question: "How can the prototype be evaluated as a functional and research-ready system?",
+      keywords: ["MVP", "modular schema", "learning log", "dashboard", "deployment", "future backend"],
+      skeleton: ["Describe the current MVP scope.", "Explain the modular course schema.", "Explain the local learning log and review queue.", "Discuss deployment as shareable demo evidence.", "Describe future evaluation with real user logs."],
+      fullAnswer: "The rough prototype can be evaluated by whether it loads course packs, displays modular review units, records quiz/review interactions locally, and produces meaningful review pages. It is research-ready in the sense that the data model can later support learning analytics, knowledge tracing, and adaptive recommendation, while the current version remains a synthetic-data demonstration.",
+      commonMistakes: ["Overclaiming production readiness.", "Ignoring the difference between local MVP storage and backend data infrastructure."],
+      relatedLectureIds: ["w04"], relatedConceptIds: ["modular-schema", "local-learning-log", "priority-dashboard", "deployment-workflow"], category: "prototype-engineering"
+    })
+  ],
+
+  formulas: [
+    formula({ id: "formula-forgetting-curve", title: "Simplified Forgetting Curve", latex: "R(t)=e^{-t/S}", variables: [{ symbol: "R(t)", meaning: "estimated retention after time t" }, { symbol: "S", meaning: "memory strength or stability parameter" }], example: "If the memory strength S increases after successful recall, the next review can be scheduled later.", examNote: "Use it as a conceptual anchor for spaced review, not as a precise user model in this rough demo.", relatedLectureIds: ["w01"], relatedConceptIds: ["spaced-repetition"], category: "learning-science" }),
+    formula({ id: "formula-mastery-update", title: "Toy Mastery Update", latex: String.raw`p_{next}=p+\alpha(r-p)`, variables: [{ symbol: "p", meaning: "current mastery estimate" }, { symbol: "r", meaning: "new response signal, such as 0 or 1" }, { symbol: String.raw`\alpha`, meaning: "update rate" }], example: "A correct answer can move p upward, while a wrong answer can move it downward.", examNote: "This is a simplified placeholder for explaining adaptive review logic.", relatedLectureIds: ["w02"], relatedConceptIds: ["mastery-estimate", "knowledge-component"], category: "cognitive-diagnosis" }),
+    formula({ id: "formula-cosine-similarity", title: "Retrieval Similarity", latex: String.raw`\cos(\theta)=\frac{a\cdot b}{\lVert a\rVert\lVert b\rVert}`, variables: [{ symbol: "a,b", meaning: "embedding vectors for query and document chunk" }, { symbol: String.raw`\cos(\theta)`, meaning: "similarity score" }], example: "A RAG system may retrieve chunks whose embeddings are close to the question embedding.", examNote: "Useful as a simple technical explanation for retrieval-based course-content ingestion.", relatedLectureIds: ["w03"], relatedConceptIds: ["rag-assistant"], category: "ai-workflow" }),
+    formula({ id: "formula-priority-score", title: "Prototype Review Priority Score", latex: "score=w_1M+w_2D+w_3E+w_4C", variables: [{ symbol: "M", meaning: "mistake frequency" }, { symbol: "D", meaning: "due-review signal" }, { symbol: "E", meaning: "exam or instructor priority" }, { symbol: "C", meaning: "confidence mismatch signal" }], example: "An item with repeated mistakes and an upcoming due date should appear higher on the dashboard.", examNote: "This formula is a transparent design placeholder before using learned recommendation models.", relatedLectureIds: ["w04"], relatedConceptIds: ["priority-dashboard"], category: "prototype-engineering" })
+  ],
+
+  figures: [
+    figure({ id: "fig-review-cycle", title: "Learning-Science Review Cycle", type: "cycle", imagePath: "/content/synthetic/assets/review-cycle.svg", alt: "A four-step cycle from encoding to recall, diagnosis, and scheduled review.", keyVisualCue: "Look for the loop: review is not linear reading; it is repeated recall with feedback.", recognitionQuestion: "Which part of the diagram corresponds to active recall?", relatedLectureIds: ["w01"], relatedConceptIds: ["spaced-repetition", "active-recall", "metacognitive-review"], category: "learning-science", tags: ["review-cycle", "learning-science"] }),
+    figure({ id: "fig-diagnosis-loop", title: "Cognitive Diagnosis Loop", type: "diagnosis", imagePath: "/content/synthetic/assets/diagnosis-loop.svg", alt: "A loop from quiz events to knowledge map, weak areas, and review path.", keyVisualCue: "Quiz events are useful only after being mapped to knowledge components.", recognitionQuestion: "What turns raw quiz attempts into diagnostic evidence?", relatedLectureIds: ["w02"], relatedConceptIds: ["knowledge-component", "mastery-estimate", "mistake-pattern"], category: "cognitive-diagnosis", tags: ["diagnosis", "learning-log"] }),
+    figure({ id: "fig-rag-pipeline", title: "AI-Ready Content Ingestion Pipeline", type: "pipeline", imagePath: "/content/synthetic/assets/rag-pipeline.svg", alt: "A pipeline from upload to chunking, retrieval, generation, and verification.", keyVisualCue: "The key transition is from raw materials to grounded generated review objects.", recognitionQuestion: "Why is verification placed after generation?", relatedLectureIds: ["w03"], relatedConceptIds: ["content-ingestion", "rag-assistant", "grounding-guardrail"], category: "ai-workflow", tags: ["rag", "llm", "pipeline"] }),
+    figure({ id: "fig-modular-architecture", title: "Modular Revision Hub Architecture", type: "system architecture", imagePath: "/content/synthetic/assets/modular-architecture.svg", alt: "A modular system architecture with course JSON, frontend UI, and local learning log.", keyVisualCue: "The course content is separated from the UI so that different courses can be loaded.", recognitionQuestion: "Which block makes the system course-agnostic?", relatedLectureIds: ["w04"], relatedConceptIds: ["modular-schema", "local-learning-log", "priority-dashboard"], category: "prototype-engineering", tags: ["architecture", "frontend", "schema"] })
+  ],
+
+  trackPatches: [
+    { trackId: "learning-science", addLectureIds: ["w01"], addConceptIds: ["spaced-repetition", "active-recall", "cognitive-load", "metacognitive-review"], addTrapIds: ["trap-passive-reading", "trap-overloaded-dashboard"], addQuizIds: ["q-spaced-repetition", "q-active-recall"], addAnswerIds: ["ans-learning-science-design"], addFormulaIds: ["formula-forgetting-curve"], addFigureIds: ["fig-review-cycle"], addProblemSolutions: [{ problem: "Students reread notes without knowing what to practise.", solution: "Use active recall and spaced review queues to create concrete review actions.", conceptId: "active-recall" }] },
+    { trackId: "cognitive-diagnosis", addLectureIds: ["w02"], addConceptIds: ["knowledge-component", "mastery-estimate", "mistake-pattern", "confidence-calibration"], addTrapIds: ["trap-score-equals-mastery", "trap-confidence-is-accuracy"], addQuizIds: ["q-knowledge-component", "q-confidence-calibration"], addAnswerIds: ["ans-cognitive-diagnosis"], addFormulaIds: ["formula-mastery-update"], addFigureIds: ["fig-diagnosis-loop"], addProblemSolutions: [{ problem: "A wrong answer alone does not explain what is weak.", solution: "Map attempts to knowledge components and repeated mistake patterns.", conceptId: "knowledge-component" }] },
+    { trackId: "ai-workflow", addLectureIds: ["w03"], addConceptIds: ["content-ingestion", "rag-assistant", "quiz-generation", "grounding-guardrail"], addTrapIds: ["trap-train-llm-wording", "trap-ungrounded-generation"], addQuizIds: ["q-rag-vs-finetuning", "q-grounding"], addAnswerIds: ["ans-ai-extension-roadmap"], addFormulaIds: ["formula-cosine-similarity"], addFigureIds: ["fig-rag-pipeline"], addProblemSolutions: [{ problem: "User materials are unstructured and may be too long for direct review.", solution: "Use an ingestion and RAG workflow to structure and ground generated review items.", conceptId: "content-ingestion" }] },
+    { trackId: "prototype-engineering", addLectureIds: ["w04"], addConceptIds: ["modular-schema", "local-learning-log", "priority-dashboard", "deployment-workflow"], addTrapIds: ["trap-feature-list-without-data", "trap-demo-overclaim"], addQuizIds: ["q-modular-schema", "q-prototype-scope"], addAnswerIds: ["ans-prototype-evaluation"], addFormulaIds: ["formula-priority-score"], addFigureIds: ["fig-modular-architecture"], addProblemSolutions: [{ problem: "A course-specific demo is hard to reuse or share.", solution: "Separate content packs from UI components through a modular schema.", conceptId: "modular-schema" }] },
+    { trackId: "personalized-review", addLectureIds: ["w01", "w02", "w04"], addConceptIds: ["spaced-repetition", "metacognitive-review", "mastery-estimate", "priority-dashboard"], addTrapIds: ["trap-score-equals-mastery"], addQuizIds: ["q-spaced-repetition", "q-confidence-calibration"], addFormulaIds: ["formula-forgetting-curve", "formula-priority-score"] },
+    { trackId: "research-extension", addLectureIds: ["w02", "w03", "w04"], addConceptIds: ["confidence-calibration", "rag-assistant", "grounding-guardrail", "deployment-workflow"], addAnswerIds: ["ans-ai-extension-roadmap", "ans-prototype-evaluation"] }
+  ],
+
+  reviewPatches: [
+    { section: "core-topics", addConceptIds: ["spaced-repetition", "active-recall", "knowledge-component", "mastery-estimate", "content-ingestion", "rag-assistant", "modular-schema", "priority-dashboard"] },
+    { section: "high-probability-long-answers", addAnswerIds: ["ans-learning-science-design", "ans-cognitive-diagnosis", "ans-ai-extension-roadmap", "ans-prototype-evaluation"] },
+    { section: "calculation-sheet", addFormulaIds: ["formula-forgetting-curve", "formula-mastery-update", "formula-cosine-similarity", "formula-priority-score"] },
+    { section: "common-traps", addTrapIds: ["trap-passive-reading", "trap-score-equals-mastery", "trap-train-llm-wording", "trap-ungrounded-generation", "trap-demo-overclaim"] },
+    { section: "figure-recognition", addFigureIds: ["fig-review-cycle", "fig-diagnosis-loop", "fig-rag-pipeline", "fig-modular-architecture"] },
+    { section: "last-30-minute-review", addItems: [
+      "Position the project as a synthetic-data, AI-ready prototype, not as a real course-material release.",
+      "Learning-science principles: spaced repetition, active recall, cognitive load reduction, and metacognitive review.",
+      "Cognitive diagnosis: map quiz attempts and mistakes to knowledge components before recommending review.",
+      "AI extension: prefer RAG-based content ingestion and grounding over claiming to train a new LLM.",
+      "Prototype strength: modular schema, local learning log, interactive cards, printable exports, and deployable frontend."
+    ] }
+  ]
+};
+
+export default applyDemoCourseI18n(demoCourse);

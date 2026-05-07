@@ -1,0 +1,24 @@
+{
+  "name": "modular-exam-revision-hub",
+  "version": "0.7.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --configLoader native",
+    "build": "vite --configLoader native build",
+    "preview": "vite --configLoader native preview",
+    "validate:content": "node scripts/validateContent.mjs",
+    "check:content": "node scripts/validateContent.mjs",
+    "export:print": "node scripts/generatePrintExports.mjs"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "6.0.1",
+    "vite": "8.0.11",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "react-router-dom": "7.15.0",
+    "katex": "0.16.45",
+    "react-katex": "3.1.0"
+  },
+  "devDependencies": {}
+}

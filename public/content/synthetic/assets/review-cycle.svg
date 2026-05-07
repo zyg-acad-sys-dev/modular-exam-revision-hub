@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Review cycle diagram">
+  <rect width="960" height="540" rx="32" fill="#0f172a"/>
+  <text x="60" y="78" fill="#e2e8f0" font-size="32" font-weight="800">Learning-Science Review Cycle</text>
+  <g fill="#38bdf8" font-size="24" font-weight="700" text-anchor="middle">
+    <circle cx="220" cy="260" r="82" fill="#0ea5e9" opacity="0.22" stroke="#38bdf8" stroke-width="4"/>
+    <text x="220" y="255">Encode</text><text x="220" y="285" font-size="16">concept card</text>
+    <circle cx="480" cy="170" r="82" fill="#22c55e" opacity="0.22" stroke="#4ade80" stroke-width="4"/>
+    <text x="480" y="165">Recall</text><text x="480" y="195" font-size="16">quiz prompt</text>
+    <circle cx="740" cy="260" r="82" fill="#f59e0b" opacity="0.22" stroke="#fbbf24" stroke-width="4"/>
+    <text x="740" y="255">Diagnose</text><text x="740" y="285" font-size="16">mistake log</text>
+    <circle cx="480" cy="365" r="82" fill="#a855f7" opacity="0.22" stroke="#c084fc" stroke-width="4"/>
+    <text x="480" y="360">Schedule</text><text x="480" y="390" font-size="16">spaced review</text>
+  </g>
+  <g stroke="#94a3b8" stroke-width="6" fill="none" marker-end="url(#arrow)">
+    <path d="M300 232 C360 175 390 163 405 164"/>
+    <path d="M555 190 C615 205 640 224 660 238"/>
+    <path d="M704 330 C648 370 600 382 562 382"/>
+    <path d="M398 380 C320 360 270 330 250 322"/>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#94a3b8"/></marker></defs>
+</svg>
