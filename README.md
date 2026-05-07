@@ -1,5 +1,7 @@
 # Modular Exam Revision Hub
 
+Live demo: [Modular Exam Revision Hub](https://modular-exam-revision-hub.vercel.app/)
+
 **Modular Exam Revision Hub** is a self-initiated React/Vite prototype for modular online exam revision.
 
 The idea is simple: revision materials are often scattered across notes, slides, screenshots, formulas, reminders, and previous mistakes. This prototype reorganises that kind of material into smaller interactive review units, including concept cards, quiz cards, common-trap cards, formula practice, figure-recognition prompts, long-answer practice, a mistake book, spaced review, a priority dashboard, search, and printable review sheets.
